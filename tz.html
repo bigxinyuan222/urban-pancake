@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>钉钉授权回调</title>
+</head>
+
+<body style="text-align:center;margin-top:120px;font-family:system-ui;">
+    <div>
+        <p>授权成功，正在返回 NFC-TAG</p>
+        <p style="color:#666;font-size:14px">如果没有自动打开APP，请手动启动 NFC-TAG</p>
+    </div>
+    <script>
+        const params = new URLSearchParams(location.search);
+        const authCode = params.get("authCode");
+        if (authCode) {
+            // encodeURIComponent 防止code特殊字符破坏url
+            const jumpUrl = `nfctagapp://dingauth?authCode=${encodeURIComponent(authCode)}`;
+            location.href = jumpUrl;
+        } else {
+            document.querySelector("div").innerHTML = "<p>授权参数缺失，请重新发起登录</p>";
+        }
+    </script>
+</body>
+
+</html>
